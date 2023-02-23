@@ -6,14 +6,18 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final ThemeData theme = ThemeData(
+    accentColor: Colors.red,
+    brightness: Brightness.dark,
+    primarySwatch: Colors.orange,
+  );
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Expense Tracker',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
+      theme: theme.copyWith(
+        colorScheme: theme.colorScheme.copyWith(primary: Colors.blue, secondary: Colors.black)
       ),
       home: TabsController(),
     );

@@ -22,28 +22,28 @@ class _TabsControllerState extends State<TabsController> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
           // the App.build method, and use it to set our appbar title.
           title: Text("Expenses $_selectedIndex"),
         ),
-        body: const TabBarView(
-          children: [
-            Icon(Icons.directions_car),
-            Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
-          ],
-        ),
+        body: Text(""),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.call), label: 'Calls'),
-            BottomNavigationBarItem(icon: Icon(Icons.camera), label: 'Camera'),
-            BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chats'),
+            BottomNavigationBarItem(icon: Icon(Icons.paid), label: 'Expenses'),
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add'),
+            BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Reports'),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
           ],
           onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+          // type: BottomNavigationBarType.shifting,
+          // selectedItemColor: Colors.white,
+          // unselectedItemColor: Colors.white,
         ),
       ),
     );
