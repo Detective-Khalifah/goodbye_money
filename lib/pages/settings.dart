@@ -19,7 +19,29 @@ const items = [
 class Settings extends WidgetWithTitle {
   const Settings({Key? key}) : super(key: key, title: "Expenses");
 
-  void handleEraseData() {}
+  void _showAlertDialog(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      onPressed: () {
+        Navigator.of(context).pop();
+      }, child: Text("OK"),
+    );
+
+    // Create Alert Dialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Simple Alert"),
+      content: Text("This is an alert message"),
+      actions: [okButton],
+    );
+
+    // Show the dialog
+    showDialog(
+      context: context,
+       builder: (BuildContext context) {
+        return alert;
+       }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,34 +61,37 @@ class Settings extends WidgetWithTitle {
           children: List.generate(
             items.length,
             (index) => GestureDetector(
-              onTap: () {
-                switch (index) {
-                  case 0:
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const Categories()));
-                    break;
-                }
-              },
-              child: DecoratedBox(
-                decoration: BoxDecoration(),
-                child: CupertinoFormRow(
-                  prefix: Text(
-                    items[index].label,
-                    style: TextStyle(
-                      color:
-                      items[index].isDestructive ? Colors.red : Colors.white,
+                onTap: () {
+                  switch (index) {
+                    case 0:
+                      Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (context) => const Categories()));
+                      break;
+                    case 1:
+                      _showAlertDialog(context);
+                      break;
+                  }
+                },
+                child: DecoratedBox(
+                  decoration: BoxDecoration(),
+                  child: CupertinoFormRow(
+                    prefix: Text(
+                      items[index].label,
+                      style: TextStyle(
+                        color: items[index].isDestructive
+                            ? Colors.red
+                            : Colors.white,
+                      ),
                     ),
+                    helper: null,
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                    child: items[index].isDestructive
+                        ? Container()
+                        : const Icon(Icons.keyboard_arrow_right_sharp),
                   ),
-                  helper: null,
-                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-                  child: items[index].isDestructive
-                      ? Container()
-                      : const Icon(Icons.keyboard_arrow_right_sharp),
-                ),
-              )
-            ),
+                )),
           ),
         ),
       ),
