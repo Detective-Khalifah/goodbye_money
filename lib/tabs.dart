@@ -38,10 +38,13 @@ class _TabsControllerState extends State<TabsController> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text("${_pages[_selectedIndex].title}"),
+        backgroundColor: Colors.black,
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.black,
         currentIndex: _selectedIndex,
+        fixedColor: Colors.blue,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.paid),

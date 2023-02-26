@@ -7,7 +7,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final ThemeData theme = ThemeData(
-    accentColor: Colors.red,
+    accentColor: Colors.blue,
     brightness: Brightness.dark,
     primarySwatch: Colors.orange,
   );
