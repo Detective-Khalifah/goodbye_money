@@ -20,27 +20,26 @@ class Settings extends WidgetWithTitle {
   const Settings({Key? key}) : super(key: key, title: "Expenses");
 
   void _showAlertDialog(BuildContext context) {
-    // Create button
-    Widget okButton = FlatButton(
-      onPressed: () {
-        Navigator.of(context).pop();
-      }, child: Text("OK"),
-    );
-
-    // Create Alert Dialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Simple Alert"),
-      content: Text("This is an alert message"),
-      actions: [okButton],
-    );
-
-    // Show the dialog
-    showDialog(
-      context: context,
-       builder: (BuildContext context) {
-        return alert;
-       }
-    );
+    showCupertinoModalPopup<void>(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+              title: const Text('Are you sure?'),
+              content: const Text('This action cannot be undone'),
+              actions: <CupertinoDialogAction>[
+                CupertinoDialogAction(
+                    isDefaultAction: true,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel')),
+                CupertinoDialogAction(
+                    isDestructiveAction: true,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Erase data')),
+              ],
+            ));
   }
 
   @override
@@ -61,62 +60,41 @@ class Settings extends WidgetWithTitle {
           children: List.generate(
             items.length,
             (index) => GestureDetector(
-                onTap: () {
-                  switch (index) {
-                    case 0:
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => const Categories()));
-                      break;
-                    case 1:
-                      _showAlertDialog(context);
-                      break;
-                  }
-                },
-                child: DecoratedBox(
-                  decoration: BoxDecoration(),
-                  child: CupertinoFormRow(
-                    prefix: Text(
-                      items[index].label,
-                      style: TextStyle(
-                        color: items[index].isDestructive
-                            ? Colors.red
-                            : Colors.white,
-                      ),
+              onTap: () {
+                switch (index) {
+                  case 0:
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const Categories()));
+                    break;
+                  case 1:
+                    _showAlertDialog(context);
+                    break;
+                }
+              },
+              child: DecoratedBox(
+                decoration: BoxDecoration(),
+                child: CupertinoFormRow(
+                  prefix: Text(
+                    items[index].label,
+                    style: TextStyle(
+                      color: items[index].isDestructive
+                          ? Colors.red
+                          : Colors.white,
                     ),
-                    helper: null,
-                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-                    child: items[index].isDestructive
-                        ? Container()
-                        : const Icon(Icons.keyboard_arrow_right_sharp),
                   ),
-                )),
+                  helper: null,
+                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                  child: items[index].isDestructive
+                      ? Container()
+                      : const Icon(Icons.keyboard_arrow_right_sharp),
+                ),
+              ),
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-// ListView(
-// children: <Widget>[
-// ListTile(
-// title: Text("Categories"),
-// trailing: Icon(Icons.keyboard_arrow_right_sharp),
-// onTap: () {
-// Navigator.push(context, MaterialPageRoute(
-// builder: (context) => Categories(),
-// ));
-// }
-// ),
-// ListTile(
-// title: Text(
-// "Erase all data",
-// style: TextStyle(color: Colors.red),
-// ),
-// trailing: Icon(Icons.keyboard_arrow_right_sharp),
-// onTap: handleEraseData,
-// ),
-// ],
-// ),
